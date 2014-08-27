@@ -110,10 +110,15 @@ class Runnel
   end
 
   def start
-    puts "Starting #{conf[:name]}"
-    puts "AUTOSSH_PIDFILE=#{pid_file} autossh -M #{conf[:mport]} #{conf[:command]}"
-    ENV['AUTOSSH_PIDFILE'] = pid_file
-    `autossh -M #{conf[:mport]} #{conf[:command]}`
+    if running?
+      puts "It seems like #{conf[:name]} is already running:"
+      puts pp_description
+    else
+      puts "Starting #{conf[:name]}"
+      puts "AUTOSSH_PIDFILE=#{pid_file} autossh -M #{conf[:mport]} #{conf[:command]}"
+      ENV['AUTOSSH_PIDFILE'] = pid_file
+      `autossh -M #{conf[:mport]} #{conf[:command]}`
+    end
   end
 
   def kill
