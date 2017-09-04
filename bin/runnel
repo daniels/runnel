@@ -111,8 +111,8 @@ class Runnel
 
   def start
     if running?
-      puts "It seems like #{conf[:name]} is already running:"
-      puts pp_description
+      warn "It seems like #{conf[:name]} is already running:"
+      warn pp_description
     else
       puts "Starting #{conf[:name]}"
       puts "AUTOSSH_PIDFILE=#{pid_file} autossh -M #{conf[:mport]} #{conf[:command]}"
@@ -125,7 +125,7 @@ class Runnel
     if running?
       `kill #{pid}`
     else
-      puts "Unable to find a running #{conf[:name]}"
+      warn "Unable to find a running #{conf[:name]}"
     end
   end
 
